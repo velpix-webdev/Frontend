@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaPhoneAlt, FaPlay, FaCheck } from "react-icons/fa";
@@ -9,12 +9,36 @@ const About = () => {
         AOS.init({ duration: 1000, once: true });
     }, []);
 
+    const textRef = useRef(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const element = textRef.current;
+            if (!element) return;
+
+            const rect = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+
+            // when element enters the viewport
+            if (rect.top < windowHeight * 0.8) {
+                element.classList.add("reveal-active");
+            } else {
+                element.classList.remove("reveal-active");
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     return (
         <section className="bg-gradient-to-r from-orange-30 to-black py-16 px-6 md:px-12 lg:px-20">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 {/* LEFT SIDE */}
                 <div data-aos="fade-right" className="space-y-6">
-                    <p data-aos="zoom-in-down"className="text-orange-500 font-semibold tracking-wider uppercase">
+                    <p data-aos="zoom-in-down" className="text-orange-500 font-semibold tracking-wider uppercase">
                         About Us
                     </p>
                     <h2 data-aos="flip-up" className="text-4xl md:text-5xl font-extrabold leading-tight text-gray-900">
@@ -30,7 +54,7 @@ const About = () => {
                                 alt="Team collaboration"
                                 className="w-full h-full object-cover transition-all duration-300"
                             />
-                            <div 
+                            <div
                                 className="absolute inset-0 bg-gradient-to-r from-white via-white to-amber-300 opacity-0 group-hover:opacity-30 transition-all duration-500 transform -translate-x-full group-hover:translate-x-0"
                                 style={{
                                     pointerEvents: 'none',
@@ -44,7 +68,7 @@ const About = () => {
                 <div className="space-y-6 text-gray-700">
                     <div className="grid  grid-cols-2 gap-4">
                         <div className="relative overflow-hidden group rounded-xl">
-                            <img 
+                            <img
                                 data-aos="fade-right"
                                 data-aos-offset="500"
                                 data-aos-easing="ease-in-sine"
@@ -52,7 +76,7 @@ const About = () => {
                                 alt="Strategy meeting"
                                 className="w-full h-full object-cover transition-all duration-300"
                             />
-                            <div 
+                            <div
                                 className="absolute inset-0 bg-gradient-to-r from-white via-white to-amber-300 opacity-0 group-hover:opacity-30 transition-all duration-500 transform -translate-x-full group-hover:translate-x-0"
                                 style={{
                                     pointerEvents: 'none',
@@ -60,7 +84,7 @@ const About = () => {
                             />
                         </div>
                         <div className="relative overflow-hidden group rounded-xl">
-                            <img 
+                            <img
                                 data-aos="fade-right"
                                 data-aos-offset="400"
                                 data-aos-easing="ease-in-sine"
@@ -68,7 +92,7 @@ const About = () => {
                                 alt="SEO discussion"
                                 className="w-full h-full object-cover transition-all duration-300"
                             />
-                            <div 
+                            <div
                                 className="absolute inset-0 bg-gradient-to-r from-white via-white to-amber-300 opacity-0 group-hover:opacity-30 transition-all duration-500 transform -translate-x-full group-hover:translate-x-0"
                                 style={{
                                     pointerEvents: 'none',
@@ -78,17 +102,17 @@ const About = () => {
                     </div>
 
                     <p data-aos="fade-left"
-     data-aos-anchor="#example-anchor"
-     data-aos-offset="500"
-     data-aos-duration="500" className="mt-4 text-gray-600 leading-relaxed">
+                        data-aos-anchor="#example-anchor"
+                        data-aos-offset="500"
+                        data-aos-duration="500" className="mt-4 text-gray-600 leading-relaxed">
                         Our digital services empower brands with innovative strategies and
                         solutions for sustainable growth and engagement.
                     </p>
 
                     <p data-aos="fade-left"
-     data-aos-anchor="#example-anchor"
-     data-aos-offset="500"
-     data-aos-duration="500" className="text-gray-500 leading-relaxed">
+                        data-aos-anchor="#example-anchor"
+                        data-aos-offset="500"
+                        data-aos-duration="500" className="text-gray-500 leading-relaxed">
                         Tempor commodo ullamcorper a lacus. Amet commodo nulla facilisi
                         nullam. Molestie nunc non blandit massa enim nec. Felis bibendum ut
                         tristique et egestas quis ipsum suspendisse ultrices.
@@ -107,7 +131,7 @@ const About = () => {
 
                     {/* Feature List */}
                     <div data-aos="fade-up"
-     data-aos-anchor-placement="top-center" className="space-y-3 mt-4">
+                        data-aos-anchor-placement="top-center" className="space-y-3 mt-4">
                         {[
                             "Results-Driven Optimization",
                             "Keyword Research Excellence",
@@ -122,7 +146,7 @@ const About = () => {
 
                     {/* Contact , Read More */}
                     <div data-aos="fade-up"
-     data-aos-anchor-placement="top-center" className="flex flex-col sm:flex-row sm:items-center gap-6 mt-8">
+                        data-aos-anchor-placement="top-center" className="flex flex-col sm:flex-row sm:items-center gap-6 mt-8">
                         <div className="flex items-center gap-3">
                             <div className="bg-black text-white p-3 rounded-full">
                                 <FaPhoneAlt />
@@ -141,6 +165,7 @@ const About = () => {
                     </div>
                 </div>
             </div>
+            <div className="absolute inset-0 bg-black/50"></div>
         </section>
     );
 };
