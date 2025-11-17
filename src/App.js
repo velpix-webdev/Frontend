@@ -1,17 +1,20 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ServiceDetailPage from './pages/ServiceDetailPage';
+import Home from "./pages/Home"
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
-
-function App() {
+import Footer from './components/Footer';
+export default function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <main>
-        <Home />
-        
-      </main>
-    </div>
+    <Router>
+       <Navbar/>
+      <Routes>
+       
+        <Route path="/" element={<Home />} />
+      
+         <Route path="/services/:id" element={<ServiceDetailPage />} />
+      </Routes>
+      <Footer/>
+    </Router>
   );
 }
-
-export default App;
