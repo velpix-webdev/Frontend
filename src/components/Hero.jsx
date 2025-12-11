@@ -50,9 +50,9 @@ const Hero = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <section className="relative pt-[45px] bg-black text-white overflow-hidden">
+    <section className="relative pt-[60px] md:pt-[45px] bg-black text-white overflow-hidden">
       {/*Vertical Progress Indicator */}
-      <div className="absolute left-6 top-1/2 transform -translate-y-1/2 z-20 hidden md:flex flex-col items-center">
+      <div className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-20 hidden md:flex flex-col items-center">
         <div className="relative h-60 flex flex-col items-center">
           {/* Background Line */}
           <div className="absolute top-0 bottom-0 w-[2px] bg-gray-600"></div>
@@ -102,7 +102,7 @@ const Hero = () => {
         speed={1000}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
-        className="w-full h-screen"
+        className="w-full h-[calc(100vh-60px)] md:h-screen"
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={slide.id}>
@@ -116,20 +116,20 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
 
               {/* Content */}
-              <div className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-12 h-full overflow-visible">
+              <div className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-16 py-8 sm:py-12 h-full overflow-visible">
                 {/* Left Text */}
                 <div className="md:w-1/2 text-center md:text-left space-y-8">
                   {/* Tag,animation */}
-                  <div className="inline-block relative group">
-                    <span className="relative z-10 inline-block bg-gradient-to-r from-orange-500 to-amber-400 text-black text-sm font-bold px-6 py-2.5 rounded-full shadow-lg transform transition-all duration-300 group-hover:scale-105">
+                  <div className="inline-block relative group mb-4 sm:mb-0">
+                    <span className="relative z-10 inline-block bg-gradient-to-r from-orange-500 to-amber-400 text-black text-xs sm:text-sm font-bold px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-full shadow-lg transform transition-all duration-300 group-hover:scale-105">
                       {slide.tag}
                     </span>
                     <span className="absolute -inset-1 bg-orange-500/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                   </div>
 
                   {/* Main Heading */}
-                  <div className="space-y-4">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight">
+                  <div className="space-y-2 sm:space-y-4">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight">
                       <div className="text-white/90">{slide.title1}</div>
                       <div className="text-white">{slide.title2}</div>
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">
@@ -139,20 +139,20 @@ const Hero = () => {
                   </div>
 
                   {/* Subtitle */}
-                  <p className="text-gray-200/90 max-w-xl mx-auto md:mx-0 text-base md:text-lg leading-relaxed">
+                  <p className="text-gray-200/90 max-w-xl mx-auto md:mx-0 text-sm sm:text-base md:text-lg leading-relaxed">
                     {slide.subtitle}
                   </p>
 
                   {/* Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start pt-2">
-                    <button className="relative group overflow-hidden bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:-translate-y-0.5">
+                  <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center md:justify-start pt-2 w-full sm:w-auto">
+                    <button className="relative group overflow-hidden bg-gradient-to-r from-orange-500 to-amber-500 text-black font-bold px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30 hover:-translate-y-0.5 text-sm sm:text-base">
                       <span className="relative z-10">Get Started</span>
                       <span className="absolute inset-0 bg-gradient-to-r from-orange-400 to-amber-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     </button>
-                    <button className="relative group overflow-hidden border-2 border-orange-500 text-orange-400 hover:text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:bg-orange-500/10">
-                      <span className="relative z-10 flex items-center justify-center gap-2">
+                    <button className="relative group overflow-hidden border-2 border-orange-500 text-orange-400 hover:text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full transition-all duration-300 hover:bg-orange-500/10 text-sm sm:text-base">
+                      <span className="relative z-10 flex items-center justify-center gap-1 sm:gap-2">
                         Learn More
-                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                       </span>
@@ -161,7 +161,7 @@ const Hero = () => {
                 </div>
 
                 {/* Right Side  */}
-                <div className="relative md:w-1/2 flex justify-center items-center mt-10 md:mt-0">
+                <div className="relative w-full md:w-1/2 flex justify-center items-center mt-8 sm:mt-10 md:mt-0 px-4 sm:px-0">
                   <div className="relative w-full max-w-md">
                     {/* Main Image */}
                     <div className="relative z-10">

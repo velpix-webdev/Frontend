@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import services from "../data/services";
@@ -9,6 +9,11 @@ export default function ServiceDetailPage() {
 
   useEffect(() => {
     AOS.init({ duration: 900, once: true });
+    // Scroll to top when component mounts
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }, []);
 
   const service = services.find((s) => s.id === Number(id));
@@ -30,7 +35,9 @@ export default function ServiceDetailPage() {
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative z-10 text-center text-white">
           <h1 className="text-4xl font-extrabold tracking-wider">OUR SERVICES</h1>
-          <p className="mt-2 text-sm opacity-90">Home :: Our Services</p>
+          <p className="mt-2 text-sm opacity-90">
+            <Link to="/" className="hover:underline">Home</Link> :: Our Services
+          </p>
         </div>
       </section>
 

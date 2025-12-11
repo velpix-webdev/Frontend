@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { FiPhone, FiSearch, FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
-import { FaChevronDown } from "react-icons/fa6";
 import Logo from "../assets/images/Logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(null);
   const [scrolled, setScrolled] = useState(false);
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,48 +14,23 @@ const Navbar = () => {
       }
     };
 
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(null);
-      }
-    };
-
     document.addEventListener("scroll", handleScroll);
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  const toggleDropdown = (menu) => {
-    setDropdownOpen(dropdownOpen === menu ? null : menu);
-  };
+  const closeMenu = () => setMenuOpen(false);
 
-  const closeAllMenus = () => {
-    setMenuOpen(false);
-    setDropdownOpen(null);
-  };
-
-  const navItems = [
-    { name: "Home", dropdown: ["Home 1", "Home 2"] },
-    { name: "About", dropdown: ["Who We Are", "Team"] },
-    { name: "Services", dropdown: ["Design", "Development", "Marketing"] },
-    { name: "Project", dropdown: ["Portfolio", "Case Studies"] },
-    { name: "Contact", dropdown: ["Contact Us", "Support"] },
-  ];
+  const navItems = ["Home", "About", "Services", "Portfolio", "Contact"];
 
   return (
     <nav
-      ref={dropdownRef}
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? "bg-black py-2 shadow-md text-white"
           : "bg-white py-4 text-black"
       }`}
     >
-      <div className="container mx-auto p-[px] px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
         <div className="flex-shrink-0">
           <img
@@ -70,86 +42,58 @@ const Navbar = () => {
           />
         </div>
 
-    
-        <div className="flex-grow"></div>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-1">
-          <ul className="flex items-center gap-1">
-          {navItems.map((item, index) => (
-            <li key={index} className="relative group">
-              <button
-                onClick={() => toggleDropdown(item.name)}
-                className={`flex items-center gap-1.5 ${
-                  scrolled
-                    ? "text-white hover:text-orange-400"
-                    : "text-gray-800 hover:text-orange-500"
-                } transition-colors duration-200 font-medium py-2 px-3 text-lg`}
-              >
-                {item.name}
-                <FaChevronDown
-                  size={10}
-                  className="mt-0.5 transition-transform duration-200 group-hover:translate-y-0.5"
-                />
-              </button>
-
-              {/* Dropdown */}
-              <div
-                className={`absolute left-0 mt-1 w-48 bg-white text-black rounded-lg shadow-xl py-1 transition-all duration-300 origin-top transform ${
-                  dropdownOpen === item.name
-                    ? "opacity-100 scale-100"
-                    : "opacity-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {item.dropdown.map((sub, idx) => (
-                  <a
-                    key={idx}
-                    href={`#${sub.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="block px-4 py-2.5 text-base hover:bg-orange-50 hover:text-orange-500 transition-colors duration-200"
-                    onClick={closeAllMenus}
-                    role="button"
-                  >
-                    {sub}
-                  </a>
-                ))}
-              </div>
-            </li>
-          ))}
+        <div className="hidden lg:flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <ul className="flex items-center space-x-6">
+            {navItems.map((item, index) => (
+              <li key={index}>
+                <a
+                  href={`#${item.toLowerCase()}`}
+                  className={`text-lg font-medium transition-colors duration-200 ${
+                    scrolled
+                      ? "text-white hover:text-orange-400"
+                      : "text-gray-800 hover:text-orange-500"
+                  }`}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
           </ul>
 
           {/* Right Section */}
-          <div className="flex items-center gap-3 ml-6">
-          <a
-            href="tel:+1333888899"
-            className={`flex items-center gap-2 ${
-              scrolled 
-                ? "bg-orange-500 hover:bg-orange-600 text-black"
-                : "bg-orange-500 hover:bg-orange-600 text-black"
-            } px-4 py-2.5 rounded-full text-sm font-medium transition-colors duration-200`}
-          >
-            <FiPhone className="flex-shrink-0" />
-            <span>+1 (333) 8888 99</span>
-          </a>
-          <button
-            className="bg-orange-500 hover:bg-orange-400 p-2.5 rounded-full transition-colors duration-200"
-            aria-label="Search"
-          >
-            <FiSearch size={18} className="text-black" />
-          </button>
-          <button className={`${
-            scrolled 
-              ? 'bg-white hover:bg-gray-100 text-black' 
-              : 'bg-black hover:bg-gray-800 text-white'
-          } px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-colors duration-200`}>
-            Get In Touch <FiArrowUpRight />
-          </button>
+          <div className="flex items-center space-x-4 ml-6">
+            <a
+              href="tel:+1333888899"
+              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-black px-4 py-2.5 rounded-full text-sm font-medium transition-colors duration-200"
+            >
+              <FiPhone className="flex-shrink-0" />
+              <span>+1 (333) 8888 99</span>
+            </a>
+            <button
+              className="bg-orange-500 hover:bg-orange-400 p-2.5 rounded-full transition-colors duration-200"
+              aria-label="Search"
+            >
+              <FiSearch size={18} className="text-black" />
+            </button>
+            <button
+              className={`px-6 py-2.5 rounded-full font-semibold flex items-center gap-2 transition-colors duration-200 ${
+                scrolled
+                  ? "bg-white hover:bg-gray-100 text-black"
+                  : "bg-black hover:bg-gray-800 text-white"
+              }`}
+            >
+              Get In Touch <FiArrowUpRight />
+            </button>
           </div>
         </div>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className={`lg:hidden text-2xl ${scrolled ? 'text-white hover:text-orange-400' : 'text-black hover:text-orange-500'}`}
+          className={`lg:hidden text-2xl ${
+            scrolled ? "text-white hover:text-orange-400" : "text-black hover:text-orange-500"
+          }`}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? <FiX /> : <FiMenu />}
@@ -161,7 +105,7 @@ const Navbar = () => {
         className={`lg:hidden fixed inset-0 bg-black/90 backdrop-blur-sm transition-all duration-300 ease-in-out ${
           menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
-        onClick={closeAllMenus}
+        onClick={closeMenu}
       >
         <div
           className={`fixed left-0 top-0 h-full w-4/5 max-w-sm bg-black text-white transform transition-transform duration-300 ease-in-out overflow-y-auto ${
@@ -175,7 +119,7 @@ const Navbar = () => {
               <img src={Logo} alt="Logo" className="h-10 w-auto object-contain" />
             </div>
             <button
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenu}
               className="text-white text-2xl hover:text-orange-500"
             >
               <FiX />
@@ -185,67 +129,33 @@ const Navbar = () => {
           <ul className="py-4">
             {navItems.map((item, index) => (
               <li key={index} className="border-b border-gray-700">
-                <button
-                  onClick={() => toggleDropdown(item.name)}
-                  className="w-full text-left px-6 py-4 flex justify-between items-center text-white hover:text-orange-500 transition-colors duration-200"
+                <a
+                  href={`#${item.toLowerCase()}`}
+                  className="block w-full text-left px-6 py-4 text-white hover:text-orange-400 transition-colors duration-200 font-medium"
+                  onClick={closeMenu}
                 >
-                  <span className="font-medium">{item.name}</span>
-                  {item.dropdown && item.dropdown.length > 0 && (
-                    <FaChevronDown
-                      size={14}
-                      className={`transition-transform duration-200 ${
-                        dropdownOpen === item.name ? "rotate-180" : ""
-                      }`}
-                    />
-                  )}
-                </button>
-
-                {item.dropdown && item.dropdown.length > 0 && (
-                  <div
-                    className={`overflow-hidden transition-all duration-500 ease-in-out transform ${
-                      dropdownOpen === item.name 
-                        ? 'max-h-96 opacity-100 translate-y-0' 
-                        : 'max-h-0 opacity-0 -translate-y-2'
-                    }`}
-                  >
-                    <ul className="bg-white shadow-lg">
-                      {item.dropdown.map((sub, idx) => (
-                        <li key={idx} className="transition-all duration-300 hover:bg-gray-100">
-                          <button
-                            className="w-full text-left px-10 py-3 text-sm text-gray-800 hover:text-orange-500 transition-all duration-300"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              closeAllMenus();
-                            }}
-                          >
-                            {sub}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                  {item}
+                </a>
               </li>
             ))}
-
-            <div className="px-6 py-4 mt-4 space-y-4">
-              <a
-                href="tel:+1333888899"
-                className="inline-flex items-center gap-3 text-orange-400 hover:text-orange-500 transition-colors duration-200 font-medium"
-                onClick={closeAllMenus}
-              >
-                <FiPhone size={18} />
-                <span>+1 (333) 8888 99</span>
-              </a>
-
-              <button
-                className="w-full bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full font-semibold flex items-center justify-center gap-2 transition-colors duration-200"
-                onClick={closeAllMenus}
-              >
-                Get In Touch <FiArrowUpRight />
-              </button>
-            </div>
           </ul>
+
+          <div className="p-6 border-t border-gray-700">
+            <a
+              href="tel:+1333888899"
+              className="flex items-center justify-center gap-3 bg-orange-500 text-black hover:bg-orange-400 px-6 py-3 rounded-lg font-medium transition-colors duration-200 mb-4"
+              onClick={closeMenu}
+            >
+              <FiPhone />
+              <span>+1 (333) 8888 99</span>
+            </a>
+            <button 
+              className="w-full flex items-center justify-center gap-2 bg-white text-black hover:bg-gray-100 px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+              onClick={closeMenu}
+            >
+              Get In Touch <FiArrowUpRight />
+            </button>
+          </div>
         </div>
       </div>
     </nav>

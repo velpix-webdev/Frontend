@@ -6,6 +6,10 @@ import About from '../components/About';
 import Brandgrowvideo from "../components/Brandgrowvideo"
 import ServicesSection from '../components/ServicesSection';
 import Footer from '../components/Footer';
+import TestimonialsSection from '../components/testimonials-section';
+import Faqsec from "../components/faq-section"
+import Blogs from "../components/articles-section"
+
 const Home = () => {
   return (
     <>
@@ -15,7 +19,10 @@ const Home = () => {
       <SeoMarquee />
       <Brandgrowvideo/>
       <ServicesSection/>
-      <Footer/>
+      <TestimonialsSection/>
+      <Blogs/>
+      <Faqsec/>
+
     </>
 
   );
